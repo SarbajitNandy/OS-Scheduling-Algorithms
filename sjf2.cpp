@@ -18,11 +18,11 @@ int getMin() {
 	{
 		if ( timeC>=d[i].at){
 			if (!completed[i]){
-				if (min>d[i].bt) { j=i; min=d[i].at;}
+				if (min>d[i].bt) { j=i; min=d[i].bt;}
 			}
 		} else { break;}		
 	}
-	if (newPr!=n) { newPr=i;}
+	if (newPr<i) { newPr=i;}
 	return j;
 }
 
@@ -46,21 +46,20 @@ int main()
 	timeC=d[p].at;
 	while (comPr!=n) {
 		p = getMin(); 
-		if (p+1) { timeC=d[newPr].at; p=getMin();}
+		if (!(p+1)) { timeC=d[newPr].at; p=getMin();}
 		cout<< "Min: p"<<p+1<<endl;
 		if (visited[p]==0) { d[p].st = timeC; visited[p]=1;}
 		if (newPr!=n) { 
 			nextC = d[newPr].at - timeC; cout<<"---p"<<p+1 <<"nextPr:"<<newPr+1<<endl;
 			if (nextC >= d[p].bt) { timeC+=d[p].bt; d[p].et = timeC; d[p].bt=0; completed[p]=1; comPr++;}
 			else { timeC+=nextC; d[p].bt-=nextC;}
-			if (newPr==n-1) { newPr++;}
 		} else {
 			timeC+=d[p].bt; d[p].bt=0; completed[p]=1; comPr++; d[p].et=timeC;
 		}
 	}
 	cout<< "After:"<<endl;
 	for(int i=0; i<n;i++){
-		cout<<i+1<< " "<<d[i].at<<" "<<d[i].bt<<" "<<d[i].st<<" "<<d[i].et<<endl;
+		cout<<i+1<<"->"<<d[i].st<<" "<<d[i].et<<endl;
 	}
 
 
